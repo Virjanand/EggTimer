@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -13,15 +14,9 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     private TextView countDownText;
+    private MediaPlayer airhorn;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        countDownText = (TextView) findViewById(R.id.countdownTextView);
-        final MediaPlayer airhorn = MediaPlayer.create(this, R.raw.airhorn);
-
+    public void startCountDown(View view) {
         new CountDownTimer(10000, 1000) {
             public void onTick(long milliSecondsUntilDone) {
                 updateCountDownText(milliSecondsUntilDone);
@@ -31,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
                 airhorn.start();
             }
         }.start();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        countDownText = (TextView) findViewById(R.id.countdownTextView);
+        airhorn = MediaPlayer.create(this, R.raw.airhorn);
     }
 
     private void updateCountDownText(long milliSecondsUntilDone) {
