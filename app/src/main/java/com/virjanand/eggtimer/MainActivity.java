@@ -1,5 +1,6 @@
 package com.virjanand.eggtimer;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         countDownText = (TextView) findViewById(R.id.countdownTextView);
+        final MediaPlayer airhorn = MediaPlayer.create(this, R.raw.airhorn);
 
         new CountDownTimer(10000, 1000) {
             public void onTick(long milliSecondsUntilDone) {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             }
             public void onFinish() {
                 updateCountDownText(0);
+                airhorn.start();
             }
         }.start();
     }
