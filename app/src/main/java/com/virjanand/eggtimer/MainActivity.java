@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         countDownText = (TextView) findViewById(R.id.countdownTextView);
+        updateCountDownText(0);
         airhorn = MediaPlayer.create(this, R.raw.airhorn);
     }
 
