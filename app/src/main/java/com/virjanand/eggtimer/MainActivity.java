@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -36,6 +37,21 @@ public class MainActivity extends AppCompatActivity {
         countDownText = (TextView) findViewById(R.id.countdownTextView);
         updateCountDownText(0);
         airhorn = MediaPlayer.create(this, R.raw.airhorn);
+
+        SeekBar timeSeekBar = findViewById(R.id.timeSeekBar);
+        timeSeekBar.setMax(300);
+        timeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.i("Number selected: ", Integer.toString(progress));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
     }
 
     private void updateCountDownText(long milliSecondsUntilDone) {
