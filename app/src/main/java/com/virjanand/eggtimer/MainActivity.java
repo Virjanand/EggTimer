@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
             timeSeekBar.setEnabled(false);
             startCountdownButton.setText("STOP!");
 
-            timeSeekBar.setVisibility(View.INVISIBLE);
-            final Button startTimerButton = (Button) findViewById(R.id.startCountdownButton);
-            startTimerButton.setClickable(false);
             countDownTimer = new CountDownTimer(timeInMilliSeconds, SECOND) {
                 public void onTick(long milliSecondsUntilDone) {
                     updateCountDownText(milliSecondsUntilDone);
@@ -50,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onFinish() {
                     updateCountDownText(0);
                     airhorn.start();
-                    timeSeekBar.setVisibility(View.VISIBLE);
-                    startTimerButton.setClickable(true);
                 }
             };
             countDownTimer.start();
