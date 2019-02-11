@@ -20,22 +20,42 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer airhorn;
     private int timeInMilliSeconds;
     private SeekBar timeSeekBar;
+    Boolean counterIsActive = false;
+    private Button startCountdownButton;
+    private CountDownTimer countDownTimer;
 
     public void startCountDown(View view) {
-        timeSeekBar.setVisibility(View.INVISIBLE);
-        final Button startTimerButton = (Button) findViewById(R.id.startCountdownButton);
-        startTimerButton.setClickable(false);
-        new CountDownTimer(timeInMilliSeconds, SECOND) {
-            public void onTick(long milliSecondsUntilDone) {
-                updateCountDownText(milliSecondsUntilDone);
-            }
-            public void onFinish() {
-                updateCountDownText(0);
-                airhorn.start();
-                timeSeekBar.setVisibility(View.VISIBLE);
-                startTimerButton.setClickable(true);
-            }
-        }.start();
+
+        if (counterIsActive) {
+            countDownText.setText("0:30");
+            timeSeekBar.setProgress(30);
+            timeSeekBar.setEnabled(true);
+            countDownTimer.cancel();
+            startCountdownButton.setText("GO!");
+            counterIsActive = false;
+        } else {
+
+            counterIsActive = true;
+            timeSeekBar.setEnabled(false);
+            startCountdownButton.setText("STOP!");
+
+            timeSeekBar.setVisibility(View.INVISIBLE);
+            final Button startTimerButton = (Button) findViewById(R.id.startCountdownButton);
+            startTimerButton.setClickable(false);
+            countDownTimer = new CountDownTimer(timeInMilliSeconds, SECOND) {
+                public void onTick(long milliSecondsUntilDone) {
+                    updateCountDownText(milliSecondsUntilDone);
+                }
+
+                public void onFinish() {
+                    updateCountDownText(0);
+                    airhorn.start();
+                    timeSeekBar.setVisibility(View.VISIBLE);
+                    startTimerButton.setClickable(true);
+                }
+            };
+            countDownTimer.start();
+        }
     }
 
     @Override
@@ -46,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         countDownText = (TextView) findViewById(R.id.countdownTextView);
         updateCountDownText(0);
         airhorn = MediaPlayer.create(this, R.raw.airhorn);
+        startCountdownButton = (Button) findViewById(R.id.startCountdownButton);
 
         timeSeekBar = findViewById(R.id.timeSeekBar);
         timeSeekBar.setMax(300);
