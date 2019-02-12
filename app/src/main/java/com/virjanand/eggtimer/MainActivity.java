@@ -27,12 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public void startCountDown(View view) {
 
         if (counterIsActive) {
-            countDownText.setText("0:30");
-            timeSeekBar.setProgress(30);
-            timeSeekBar.setEnabled(true);
-            countDownTimer.cancel();
-            startCountdownButton.setText("GO!");
-            counterIsActive = false;
+            setStartCondition();
         } else {
 
             counterIsActive = true;
@@ -47,10 +42,20 @@ public class MainActivity extends AppCompatActivity {
                 public void onFinish() {
                     updateCountDownText(0);
                     airhorn.start();
+                    setStartCondition();
                 }
             };
             countDownTimer.start();
         }
+    }
+
+    private void setStartCondition() {
+        countDownText.setText("0:30");
+        timeSeekBar.setProgress(30);
+        timeSeekBar.setEnabled(true);
+        countDownTimer.cancel();
+        startCountdownButton.setText("GO!");
+        counterIsActive = false;
     }
 
     @Override
